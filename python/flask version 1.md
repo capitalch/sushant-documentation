@@ -21,8 +21,8 @@ if __name__ == '__main__':
     app.run()
 ```
 
-**I Created a folder GqlHelper and added a file GHelper.py in it. This file has actual all the code in it.**
-The folder GqlHelper works as package in Python. I put a __init__.py blank file in the folder. The code in GHelper.py is as follows.
+I Created a folder GqlHelper and added a file GHelper.py in it. This file has actual all the code in it.
+The folder GqlHelper works as package in Python. I put a '__init__.py' blank file in the folder. The code in GHelper.py is as follows.
 
 ***GHelper.py***
 ```
