@@ -132,7 +132,8 @@ python adam1-gql.py
 
 ### Explaination ###
 Code in adam1-gql.py simply calls GqlHelper.GHelper and imports app object
-In GHelper file Query class is created having many fields such as hello, person, people, contacts, accounts. These fields make use of other classes which are already defined earlier to Query class. Now for every field you have to create resolver in the format resolve_fieldname. Notice how you can mix different types of data such as String, object, data from API, data from database in the fields and thereby resolvers. You run the Flask server by giving command `python adam1-gql.py`. Now you can browse as http://localhost:5000/graphql. This will display GraphIql interface. therein you can give commands like:
+In GHelper file Query class is created having many fields such as hello, person, people, contacts, accounts. These fields make use of other classes which are already defined earlier to Query class. Now for every field you have to create resolver in the format resolve_fieldname. Notice how you can mix different types of data such as String, object, data from API, data from database in the fields and thereby resolvers. You run the Flask server by giving command `python adam1-gql.py`. Now you can browse as http://localhost:5000/graphql. This will display GraphIql interface. In that interface you can give commands like:
+`
 {
 	hello
 }
@@ -142,6 +143,6 @@ In GHelper file Query class is created having many fields such as hello, person,
 {
 	contacts
 }
-
+`
 
 # Implementing GraphQL in Flask in Cloudjiffy
