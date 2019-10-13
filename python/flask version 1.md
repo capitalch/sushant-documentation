@@ -113,7 +113,7 @@ virtualenv env
 env\scripts\activate
 pip install requests graphene flask_graphql simplejson psycopg2
 ```
-This completes the coding and environment setup
+This completes the coding and environment setup.
 
 Total file structure is
 ```
@@ -127,10 +127,10 @@ flask
 
 You run the program as
 ```
-	python adam1-gql.py
+python adam1-gql.py
 ```
 
-###Explaination###
+### Explaination ###
 Code in adam1-gql.py simply calls GqlHelper.GHelper and imports app object
 In GHelper file Query class is created having many fields such as hello, person, people, contacts, accounts. These fields make use of other classes which are already defined earlier to Query class. Now for every field you have to create resolver in the format resolve_fieldname. Notice how you can mix different types of data such as String, object, data from API, data from database in the fields and thereby resolvers. You run the Flask server by giving command `python adam1-gql.py`. Now you can browse as http://localhost:5000/graphql. This will display GraphIql interface. therein you can give commands like:
 {
