@@ -112,12 +112,13 @@ You run the program as
 	python adam1-gql.py
 ```
 Total file structure is
+```
 flask
 	env
 	GqlHelper
 		`__init__`.py
 		GHelper.py
-
+```
 I also created python virtual environment using following commands in windows operatig system:
 `
 pip install virtualenv
