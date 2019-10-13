@@ -1,0 +1,15 @@
+//many books here
+https://github.com/vhf/free-programming-books/blob/master/javascript-frameworks-resources.md
+
+//Hacking with reactjs: Good book
+http://www.hackingwithreact.com/
+
+//understanding this, apply, bind
+http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/
+
+//React.js course
+http://courses.reactjsprogram.com/courses/reactjsfundamentals
+21-08-2016: http://courses.reactjsprogram.com/courses/reactjsfundamentals/lectures/760301
+
+//React js simple tutorial
+https://www.tutorialspoint.com/reactjs/index.htm

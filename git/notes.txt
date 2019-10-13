@@ -1,0 +1,7 @@
+//Basics of git
+https://git-scm.com/book/en/v2
+Download and install from   http://git-scm.com/download
+cli gives commands like 'git clone' 'git checkout'
+//Just Test
+UID:capitalch@gmail.com
+pwd:s...3

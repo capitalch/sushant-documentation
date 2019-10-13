@@ -1,0 +1,6 @@
+//to do
+1. import json through MongoBooster
+2. Explore shell command. Create collections, documents through shell and check them in MongoBooster
+3. Connect node with Mongo.
+4. Execute mongo commands through node
+5. Create MProbe object in Mongo and get it in Node
