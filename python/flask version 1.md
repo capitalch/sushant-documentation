@@ -1,17 +1,18 @@
 # Implementing GraphQL in Flask in local machine
-config file
+I used a config file to connect to postgreSQL database in cloud. The config file is as below:
 ```{
     "trackTest": {
         "user":"webadmin",
-        "password":"AMGnbm23767",
-        "host":"node15792-chisel.cloudjiffy.net",
-        "port":11035,
+        "password":"*****",
+        "host":"*****",
+        "port":***,
         "database":"trackTest"
     }
 }
 ```
 
-adam1-gql.py. This is main file which uses a package which contains all actual code
+First file is adam1-gql.py. The code in adam1-gql.py is as follows:
+***adam1-gql.py***
 ```
 from GqlHelper import GHelper
 app = GHelper.app
@@ -20,9 +21,11 @@ if __name__ == '__main__':
     app.run()
 ```
 
-**Created a folder GqlHelper and added a file GHelper.py in it. This file has actual code in it.**
+**I Created a folder GqlHelper and added a file GHelper.py in it. This file has actual all the code in it.**
+The folder GqlHelper works as package in Python. I put a __init__.py blank file in the folder. The code in GHelper.py is as follows.
+
+***GHelper.py***
 ```
-**GHelper.py**
 from flask import Flask
 from graphene import ObjectType, String, Int, Float, Field, Schema, List
 from flask_graphql import GraphQLView
@@ -97,5 +100,9 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
 ))
 ```
 
+You run the program as
+```
+	python adam1-gql.py
+```
 
 # Implementing GraphQL in Flask in Cloudjiffy
