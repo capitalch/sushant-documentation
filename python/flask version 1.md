@@ -1,5 +1,7 @@
 # Implementing GraphQL in Flask in Windows environment in local machine
-I used a config file to connect to postgreSQL database in cloud. The config file is as below:
+Here I explain how to implement GraphQL server in local machine in windows environment. Following are the steps:
+
+1. For database connectivity I used config.json file as below:
 ```{
     "trackTest": {
         "user":"webadmin",
@@ -11,7 +13,7 @@ I used a config file to connect to postgreSQL database in cloud. The config file
 }
 ```
 
-First file is adam1-gql.py. The code in adam1-gql.py is as follows:
+2. Create a file adam1-gql.py. The code in adam1-gql.py is as follows:
 ***adam1-gql.py***
 ```
 from GqlHelper import GHelper
@@ -21,7 +23,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-I Created a folder GqlHelper and added a file GHelper.py in it. This file has actual all the code in it.
+3. Creat a folder GqlHelper and add a file GHelper.py in it. This file has actual code in it.
 The folder GqlHelper works as package in Python. I put a `__init__.py` blank file in this folder, which makes it to behave like apackage. The code in GHelper.py is as follows.
 
 ***GHelper.py***
@@ -106,7 +108,8 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
     graphiql=True
 ))
 ```
-I also created python virtual environment using following commands in windows operatig system:
+
+4. Create python virtual environment using following commands in windows operatig system:
 ```
 pip install virtualenv
 virtualenv env
@@ -302,5 +305,16 @@ The code is more or less the same as that in local machine. There is some differ
 
 This completes the code. If everything is fine after restarting the node you can browse at /graphql and make use of GraphQL web interface to check the GraphQL queries.
 One important nore: The logger writes to httpd/error_log file. The logger.warning('logging information') is fine enough to log your data in error_log file.
+
+Total folder structure is as follows:
+```
+/var/www/webroot/ROOT
+	wsgi.py
+	FlaskApp
+		virtenv
+		config.json
+		GraphQLApi.py
+		__init__.py
+```
 
 Happy coding.
