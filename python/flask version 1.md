@@ -109,7 +109,7 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
 ))
 ```
 
-4. Create python virtual environment using following commands in windows operatig system:
+4. Change folder to `flask`. Create python virtual environment using following commands in windows operatig system, using command prompt:
 ```
 pip install virtualenv
 virtualenv env
@@ -118,7 +118,7 @@ pip install requests graphene flask_graphql simplejson psycopg2
 ```
 This completes the coding and environment setup.
 
-Total file structure is
+Total folder structure is as follows:
 ```
 flask
 	env
