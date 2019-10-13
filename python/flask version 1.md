@@ -106,27 +106,29 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
     graphiql=True
 ))
 ```
+I also created python virtual environment using following commands in windows operatig system:
+```
+pip install virtualenv
+virtualenv env
+env\scripts\activate
+pip install requests graphene flask_graphql simplejson psycopg2
+```
+This completes the coding and environment setup
+
+Total file structure is
+```
+flask
+	env
+	adam1-gql.py
+	GqlHelper
+		`__init__`.py
+		GHelper.py
+```
 
 You run the program as
 ```
 	python adam1-gql.py
 ```
-Total file structure is
-```
-flask
-	env
-	GqlHelper
-		`__init__`.py
-		GHelper.py
-```
-I also created python virtual environment using following commands in windows operatig system:
-`
-pip install virtualenv
-virtualenv env
-env\scripts\activate
-pip install requests graphene flask_graphql simplejson psycopg2
-`
-This completes the coding and environment setup
 
 ###Explaination###
 Code in adam1-gql.py simply calls GqlHelper.GHelper and imports app object
