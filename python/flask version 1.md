@@ -1,3 +1,6 @@
+*Resources*
+https://docs.graphene-python.org/en/latest/
+
 # Implementing GraphQL in Flask in Windows environment in local machine
 Here I explain how to implement GraphQL server in local machine in windows environment. Following are the steps:
 
