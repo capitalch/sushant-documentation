@@ -13,7 +13,7 @@ Here I explain how to implement GraphQL server in local machine in windows envir
 }
 ```
 
-2. Create a file adam1-gql.py. The code in adam1-gql.py is as follows:
+2. Created a file adam1-gql.py. The code in adam1-gql.py is as follows:
 ***adam1-gql.py***
 ```
 from GqlHelper import GHelper
@@ -95,7 +95,14 @@ class Query(ObjectType):
         list = json.loads(j)
         cursor.close()
         return(list)
-schema = Schema(query=Query)
+
+class Mutation(ObjectType):
+    addHello = String()
+
+    def resolve_addHello(self, args):
+        return 'Hello world in mutation'
+
+schema = Schema(query=Query, mutation = Mutation)
 
 @app.route('/')
 def hello_world():
@@ -147,6 +154,58 @@ In GHelper file Query class is created having many fields such as hello, person,
 	contacts
 }
 `
+
+####Key points to remember for GraphQL with Graphene in Python:####
+1. Create classes for all objects
+2. Create Query class and put all your queries in Query class as properties. Also write resolver functions for all properties in Query class
+```class Query(ObjectType):
+    hello = String()
+    person = Field(PersonType)
+    people = List(PersonType)
+    contacts = String()
+    accounts = List(AccountType)
+    personById =  Field(PersonType, id=Int(required=True)) #List(AccountType, id=Int(required=True))
+
+    def resolve_hello(self, args):
+        return 'Hello World'
+
+    def resolve_person(self,args):
+        return {'firstName':'Sushant', 'lastName':'Agrawal', 'age':56}
+
+    def resolve_people(self, args):
+        return [
+            {'firstName':'Sushant', 'lastName':'Agrawal', 'age':56},
+            {'firstName':'Sushant1', 'lastName':'Agrawal1', 'age':57}
+        ]
+    
+    def resolve_contacts(self,args):
+        r = requests.get(url)
+        return r.text
+    
+    def resolve_accounts(self, args):
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        j = json.dumps(rows, indent=2)
+        list = json.loads(j)
+        cursor.close()
+        return(list)
+    
+    def resolve_personById(self, args, id):
+        return {'firstName':'Ujjal', 'lastName':'Saha', 'age':50}
+```
+3. Create Mutation class and put all your mutations in Mutation class as properties. Also write resolver functions for all properties in Mutation class. It is same as Query explained above.
+```class Mutation(ObjectType):
+    addHello = String()
+
+    def resolve_addHello(self, args):
+        return 'Hello world in mutation'
+```
+4. Remember to set the schema as follows:
+```
+schema = Schema(query=Query, mutation = Mutation)
+```
+
 
 # Implementing GraphQL in Flask in Cloudjiffy
 I was looking for a good Python web server & application server combination in cloud. I came across Cloudjiffy / Jelastic PAAS cloud environment. They offer front facing Apache web server. At the back if you want to code in Python, you have a choice between Django and Flask. Django is more popular. I found too much boiler plate code in Django. In comparison I found Flask to be very light weight. I was looking for implementation of GraphQL API in Python and I wanted good flexibility for Python coding. I do not like ORM since they limit your coding. In Flask there is no ORM. For database handling you need to write your own code. I liked that. I selected Flask application server front faced in default by Apache web server.
