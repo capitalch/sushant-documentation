@@ -1,6 +1,40 @@
 *Resources*
 https://docs.graphene-python.org/en/latest/
 
+# Deploying React.js apps in Flask
+1. In react folder at create-react-app CLI do 'npm run build'. You will get the compiled react code in a build folder.
+2. Copy the build folder as it is in the flask server root folder.
+3. write following code in flask server:
+    ```
+import requests
+from flask import Flask, render_template, send_from_directory
+app = Flask(__name__, static_folder="build/static", template_folder="build")
+
+@app.route('/')
+def serveStatic():
+    return render_template('index.html')
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory('./build', 'manifest.json')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('./build', 'favicon.ico')
+
+@app.route('/logo192.png')
+def logo():
+    return send_from_directory('./build', 'logo192.png')
+
+if __name__ == '__main__':
+    print('App.run executed')
+    app.run(debug=True, threaded=True)
+
+
+    ```
+See how manifest.json, favicon.ico, logo192.png are being fed. The create-react-app's build command puts these files in the root folder of build. When you define the static folder in flask, it looks for these static files in the build/static folder and does not find it there because these files are in the /build folder and not in /build/static folder. So either you provide all these files in the /build/static folder or define a separate route for them as above.
+
 # Implementing GraphQL in Flask in Windows environment in local machine
 Here I explain how to implement GraphQL server in local machine in windows environment. Following are the steps:
 
@@ -26,7 +60,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-3. Creat a folder GqlHelper and add a file GHelper.py in it. This file has actual code in it.
+3. Creata a folder GqlHelper and add a file GHelper.py in it. This file has actual code in it.
 The folder GqlHelper works as package in Python. I put a `__init__.py` blank file in this folder, which makes it to behave like apackage. The code in GHelper.py is as follows.
 
 ***GHelper.py***
@@ -233,16 +267,23 @@ Steps to create GraphQL API using Flask in Cloudjiffy / Jelastic
 ```
 import sys, os, logging
 logger=logging.getLogger()
-    
-path = '/var/www/webroot/ROOT'
+appFolderName = 'TraceServer'
+userPath = os.path.expanduser('~')
+path = os.path.join(userPath, 'ROOT')
+#logger.warning(path)
 if path not in sys.path:
     sys.path.append(path)
-virtenv = os.path.expanduser('~') + '/ROOT/FlaskApp/virtenv/'
+virtenv = os.path.join(path,appFolderName, 'virtenv') # os.path.expanduser('~') + '/ROOT/TraceServer/virtenv/'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 try:
     exec(compile(open(virtualenv, "rb").read(), virtualenv, 'exec'), dict(__file__=virtualenv))
-    from FlaskApp import GraphQLApi
-    application = GraphQLApi.app
+    appFolderPath = os.path.join(path, appFolderName)
+    logger.warning('appFolderPath:' + appFolderPath)
+    os.chdir(appFolderPath)
+    if appFolderPath not in sys.path:
+        sys.path.append(appFolderPath)
+    from TraceServer import traceServer
+    application = traceServer.app
 except Exception as e:
     logger.error(e)
 ```
@@ -366,7 +407,7 @@ app.add_url_rule('/graphql', view_func=GraphQLView.as_view(
 The code is more or less the same as that in local machine. There is some difference, see the code for making use of config.json file. You need to change the path for reading the file from current folder. By default the path is set to \webroot. So you use the code `cfgFilePath = os.path.expanduser('~') + '/ROOT/FlaskApp/config.json'` to change the path.
 
 This completes the code. If everything is fine after restarting the node you can browse at /graphql and make use of GraphQL web interface to check the GraphQL queries.
-One important nore: The logger writes to httpd/error_log file. The logger.warning('logging information') is fine enough to log your data in error_log file.
+One important note: The logger writes to httpd/error_log file. The logger.warning('logging information') is fine enough to log your data in error_log file.
 
 Total folder structure is as follows:
 ```
@@ -380,3 +421,23 @@ Total folder structure is as follows:
 ```
 
 Happy coding.
+
+# Steps to deploy GraphQL + Flask App + PostGreSql connectivity + React App to Cloudjiffy
+
+## Step 1: Build react app
+```npm run build``` the react app. There is build folder and inside it there is static folder.
+## Step 2: Upload
+a) Upload the build folder to \ROOT where wsgi.py file exists. No need to have static folder inside the build folder.
+b) Upload the static folder also to the same \ROOT folder.
+
+I spent a lot of time. Putting static folder of react in any other place does not work. The above only works.
+
+##: Step 3: Set config file
+Change host to IP address as 192.168.... and change port to 5432
+
+### Notes:
+In Cloudjiffy flask.cloudjiffy.net maps to  /var/www/webroot/ROOT directory. Flask assumes that the static folder which has css and js must reside in ROOT folder inside static folder. I tried to change the static folder in code by ``` app = Flask(__name__,  template_folder="../build", static_url_path = '/static', static_folder= '../build/static', root_path = '/var/www/webroot/ROOT/FlaskApp/build') ```. For template_folder = "./build" works but for static_folder = '../build/static' does not work in cloudjiffy, but at local installation of Flask it works.
+Finally I decided to keep build and static folders separate in both cloudjiffy and also at local. Both the folders stay parallel to the folder TraceServer where the server application exists. In traceMain.py I have pointed towards the build and static folder as '../../build' and '../../static'. So local and cloud has same structure.
+
+
+That is it.
